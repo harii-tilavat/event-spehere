@@ -1,0 +1,32 @@
+import express from "express";
+import helmet from "helmet";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import { env, isProd } from "@/config/env.js";
+import { apiRouter } from "@/routes/index.js";
+import { apiLimiter } from "@/middlewares/rate-limit.js";
+import { errorHandler, notFoundHandler } from "@/middlewares/error-handler.js";
+
+export function createApp(): express.Express {
+  const app = express();
+
+  app.set("trust proxy", 1);
+  app.use(helmet());
+  app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
+
+  // Phase 4: mount the Razorpay webhook route here with express.raw() BEFORE the JSON
+  // parser — its signature is computed over the raw body (docs/07 §2).
+
+  app.use(express.json({ limit: "1mb" }));
+  app.use(cookieParser());
+  app.use(apiLimiter);
+  app.use(morgan(isProd ? "combined" : "dev"));
+
+  app.use("/api/v1", apiRouter);
+
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+
+  return app;
+}
