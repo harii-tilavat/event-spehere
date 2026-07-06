@@ -12,6 +12,7 @@ import { adminEventRoutes } from "@/routes/admin-event.routes.js";
 import { adminBookingRoutes, bookingRoutes, eventBookingRoutes } from "@/routes/booking.routes.js";
 import { paymentRoutes } from "@/routes/payment.routes.js";
 import { attendanceRoutes, checkInRoutes, ticketRoutes } from "@/routes/ticket.routes.js";
+import { dashboardRoutes, reportRoutes } from "@/routes/dashboard.routes.js";
 
 export const apiRouter = Router();
 
@@ -33,3 +34,5 @@ apiRouter.use("/bookings", bookingRoutes);
 apiRouter.use("/payments", paymentRoutes);
 apiRouter.use("/tickets", ticketRoutes);
 apiRouter.use("/check-in", checkInRoutes);
+apiRouter.use("/dashboard", dashboardRoutes);
+apiRouter.use("/reports", reportRoutes);

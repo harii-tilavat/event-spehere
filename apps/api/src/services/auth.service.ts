@@ -20,6 +20,7 @@ export interface SessionMeta {
 
 export interface Session {
   user: User;
+  organizerProfile: OrganizerProfile | null;
   accessToken: string;
   refreshToken: string;
   refreshExpiresAt: Date;
@@ -37,7 +38,9 @@ async function issueSession(user: User, meta: SessionMeta): Promise<Session> {
     userAgent: meta.userAgent ?? null,
     ip: meta.ip ?? null,
   });
-  return { user, accessToken: signAccessToken(user.id, user.role), refreshToken, refreshExpiresAt };
+  const organizerProfile =
+    user.role === "organizer" ? await OrganizerProfile.findOne({ where: { userId: user.id } }) : null;
+  return { user, organizerProfile, accessToken: signAccessToken(user.id, user.role), refreshToken, refreshExpiresAt };
 }
 
 function issueVerificationEmail(user: User): Promise<void> {

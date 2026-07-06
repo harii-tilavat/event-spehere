@@ -21,7 +21,7 @@ function sessionMeta(req: Request) {
 
 function respondWithSession(res: Response, message: string, session: Session, status = 200): void {
   res.cookie(REFRESH_COOKIE, session.refreshToken, { ...cookieOptions, expires: session.refreshExpiresAt });
-  ok(res, message, { accessToken: session.accessToken, user: toUserDto(session.user) }, { status });
+  ok(res, message, { accessToken: session.accessToken, user: toUserDto(session.user, session.organizerProfile) }, { status });
 }
 
 export const register = asyncHandler(async (req, res) => {
