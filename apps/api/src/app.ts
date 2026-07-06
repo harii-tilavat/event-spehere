@@ -6,6 +6,7 @@ import morgan from "morgan";
 import { env, isProd } from "@/config/env.js";
 import { apiRouter } from "@/routes/index.js";
 import { UPLOADS_DIR } from "@/services/upload.service.js";
+import { webhook as paymentWebhook } from "@/controllers/payment.controller.js";
 import { apiLimiter } from "@/middlewares/rate-limit.js";
 import { errorHandler, notFoundHandler } from "@/middlewares/error-handler.js";
 
@@ -16,8 +17,9 @@ export function createApp(): express.Express {
   app.use(helmet());
   app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
 
-  // Phase 4: mount the Razorpay webhook route here with express.raw() BEFORE the JSON
-  // parser — its signature is computed over the raw body (docs/07 §2).
+  // Razorpay webhook BEFORE the JSON parser — its signature is computed over the
+  // raw body (docs/07 §2)
+  app.post("/api/v1/payments/webhook", express.raw({ type: "application/json" }), paymentWebhook);
 
   app.use(express.json({ limit: "1mb" }));
   app.use(cookieParser());

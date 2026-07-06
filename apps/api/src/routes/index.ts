@@ -9,6 +9,8 @@ import { uploadRoutes } from "@/routes/upload.routes.js";
 import { eventRoutes, ticketTypeRoutes } from "@/routes/event.routes.js";
 import { organizerEventRoutes } from "@/routes/organizer-event.routes.js";
 import { adminEventRoutes } from "@/routes/admin-event.routes.js";
+import { adminBookingRoutes, bookingRoutes, eventBookingRoutes } from "@/routes/booking.routes.js";
+import { paymentRoutes } from "@/routes/payment.routes.js";
 
 export const apiRouter = Router();
 
@@ -19,7 +21,11 @@ apiRouter.use("/venues", venueRoutes);
 apiRouter.use("/users", userRoutes);
 apiRouter.use("/organizers", organizerRoutes);
 apiRouter.use("/uploads", uploadRoutes);
+apiRouter.use("/events", eventBookingRoutes);
 apiRouter.use("/events", eventRoutes);
 apiRouter.use("/ticket-types", ticketTypeRoutes);
 apiRouter.use("/organizer", organizerEventRoutes);
 apiRouter.use("/admin", adminEventRoutes);
+apiRouter.use("/admin", adminBookingRoutes);
+apiRouter.use("/bookings", bookingRoutes);
+apiRouter.use("/payments", paymentRoutes);

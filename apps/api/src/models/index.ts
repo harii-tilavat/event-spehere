@@ -7,6 +7,10 @@ import { Venue } from "@/models/venue.model.js";
 import { Event } from "@/models/event.model.js";
 import { EventImage } from "@/models/event-image.model.js";
 import { TicketType } from "@/models/ticket-type.model.js";
+import { Booking } from "@/models/booking.model.js";
+import { BookingItem } from "@/models/booking-item.model.js";
+import { Payment } from "@/models/payment.model.js";
+import { Ticket } from "@/models/ticket.model.js";
 
 // Associations (docs/03 §3)
 User.hasMany(RefreshToken, { foreignKey: "userId", as: "refreshTokens" });
@@ -33,4 +37,36 @@ EventImage.belongsTo(Event, { foreignKey: "eventId", as: "event" });
 Event.hasMany(TicketType, { foreignKey: "eventId", as: "ticketTypes" });
 TicketType.belongsTo(Event, { foreignKey: "eventId", as: "event" });
 
-export { User, RefreshToken, OrganizerProfile, Notification, Category, Venue, Event, EventImage, TicketType };
+User.hasMany(Booking, { foreignKey: "attendeeId", as: "bookings" });
+Booking.belongsTo(User, { foreignKey: "attendeeId", as: "attendee" });
+
+Event.hasMany(Booking, { foreignKey: "eventId", as: "bookings" });
+Booking.belongsTo(Event, { foreignKey: "eventId", as: "event" });
+
+Booking.hasMany(BookingItem, { foreignKey: "bookingId", as: "items" });
+BookingItem.belongsTo(Booking, { foreignKey: "bookingId", as: "booking" });
+
+TicketType.hasMany(BookingItem, { foreignKey: "ticketTypeId", as: "bookingItems" });
+BookingItem.belongsTo(TicketType, { foreignKey: "ticketTypeId", as: "ticketType" });
+
+Booking.hasMany(Payment, { foreignKey: "bookingId", as: "payments" });
+Payment.belongsTo(Booking, { foreignKey: "bookingId", as: "booking" });
+
+BookingItem.hasMany(Ticket, { foreignKey: "bookingItemId", as: "tickets" });
+Ticket.belongsTo(BookingItem, { foreignKey: "bookingItemId", as: "bookingItem" });
+
+export {
+  User,
+  RefreshToken,
+  OrganizerProfile,
+  Notification,
+  Category,
+  Venue,
+  Event,
+  EventImage,
+  TicketType,
+  Booking,
+  BookingItem,
+  Payment,
+  Ticket,
+};
