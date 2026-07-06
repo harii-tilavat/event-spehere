@@ -29,6 +29,12 @@ confirmation, reminders) is printed in the **API terminal** and recorded in the
 **Payments**: without Razorpay keys, checkout shows a test-gateway panel with
 **Pay** / **Simulate failed payment** buttons. Verification is the same HMAC path as production.
 
+With `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` set in `apps/api/.env` (test-mode keys),
+the checkout opens the **real Razorpay modal** instead. Complete it with Razorpay's test
+instruments: card `4111 1111 1111 1111` (any future expiry, any CVV, OTP `1234` if asked)
+or UPI id `success@razorpay` (`failure@razorpay` to test a declined payment). The mock
+endpoint disables itself automatically in this mode.
+
 ---
 
 ## 1. Registration & email verification (attendee)
