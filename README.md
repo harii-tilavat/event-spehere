@@ -73,6 +73,7 @@ The complete Software Requirements Specification (SRS) and technical plan the im
 | [09 — Roadmap](docs/09-roadmap.md) | Phased development roadmap (all core phases complete) |
 | [10 — Deployment & Future](docs/10-deployment-future.md) | Deployment strategy (free-tier friendly) and future enhancements |
 | [react-query.md](docs/react-query.md) | Data-layer architecture and copy-paste recipes for new resources |
+| [testing-guide.md](docs/testing-guide.md) | Step-by-step manual test script for every flow (demo/viva script) |
 
 ## Feature summary
 
