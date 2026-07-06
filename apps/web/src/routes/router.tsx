@@ -13,6 +13,11 @@ import { CategoriesPage } from "@/features/admin/CategoriesPage/CategoriesPage";
 import { VenuesPage } from "@/features/admin/VenuesPage/VenuesPage";
 import { UsersPage } from "@/features/admin/UsersPage/UsersPage";
 import { OrganizersPage } from "@/features/admin/OrganizersPage/OrganizersPage";
+import { AdminEventsPage } from "@/features/admin/AdminEventsPage/AdminEventsPage";
+import { EventsPage } from "@/features/events/EventsPage/EventsPage";
+import { EventDetailPage } from "@/features/events/EventDetailPage/EventDetailPage";
+import { OrganizerEventsPage } from "@/features/organizer/OrganizerEventsPage/OrganizerEventsPage";
+import { EventEditorPage } from "@/features/organizer/EventEditorPage/EventEditorPage";
 
 /** Route map per docs/06 §3. */
 export const router = createBrowserRouter([
@@ -29,6 +34,8 @@ export const router = createBrowserRouter([
     errorElement: <RouteError />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: "events", element: <EventsPage /> },
+      { path: "events/:slug", element: <EventDetailPage /> },
       { path: "*", element: <NotFound /> },
     ],
   },
@@ -54,7 +61,12 @@ export const router = createBrowserRouter([
       </RequireAuth>
     ),
     errorElement: <RouteError />,
-    children: [{ index: true, element: <DashboardHomePage /> }],
+    children: [
+      { index: true, element: <DashboardHomePage /> },
+      { path: "events", element: <OrganizerEventsPage /> },
+      { path: "events/new", element: <EventEditorPage /> },
+      { path: "events/:slug/edit", element: <EventEditorPage /> },
+    ],
   },
 
   // Admin dashboard
@@ -72,6 +84,8 @@ export const router = createBrowserRouter([
       { path: "venues", element: <VenuesPage /> },
       { path: "users", element: <UsersPage /> },
       { path: "organizers", element: <OrganizersPage /> },
+      { path: "approvals", element: <AdminEventsPage mode="approvals" /> },
+      { path: "events", element: <AdminEventsPage mode="all" /> },
     ],
   },
 ]);

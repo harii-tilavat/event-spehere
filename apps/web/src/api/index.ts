@@ -8,3 +8,5 @@ export * from "./venues";
 export * from "./users";
 export * from "./organizers";
 export * from "./uploads";
+export * from "./events";
+export * from "./ticketTypes";
