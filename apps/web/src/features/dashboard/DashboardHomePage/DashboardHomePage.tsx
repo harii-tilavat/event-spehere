@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BadgeCheck, CalendarDays, IndianRupee, Ticket, UserCheck, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, IndianRupee, Ticket, UserCheck, Users } from "lucide-react";
 import {
   Badge,
   Card,
@@ -15,6 +15,7 @@ import {
 } from "@eventsphere/ui";
 import type { DashboardRange } from "@/api";
 import { formatDateTime, formatINR } from "@/lib/format";
+import { AttendeeDashboard } from "@/features/dashboard/AttendeeDashboard/AttendeeDashboard";
 import { CategoryChart, RevenueChart, StatCard } from "./components";
 import { useDashboardHomePage } from "./useDashboardHomePage";
 
@@ -31,12 +32,12 @@ export function DashboardHomePage() {
     rejectionReason,
     admin,
     organizer,
-    attendee,
     isLoadingStats,
   } = useDashboardHomePage();
   if (!user) return null;
+  if (user.role === "attendee") return <AttendeeDashboard />;
 
-  const showRangePicker = user.role !== "attendee" && !isPendingOrganizer;
+  const showRangePicker = !isPendingOrganizer;
 
   return (
     <div className="space-y-6">
@@ -157,37 +158,6 @@ export function DashboardHomePage() {
               </CardContent>
             </Card>
           </div>
-        </>
-      )}
-
-      {attendee && (
-        <>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <StatCard label="Confirmed bookings" value={String(attendee.totals.confirmed)} icon={Ticket} />
-            <StatCard label="Events attended" value={String(attendee.totals.attended)} icon={BadgeCheck} />
-          </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Upcoming events</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm">
-              {attendee.upcomingBookings.length === 0 && (
-                <p className="text-muted-foreground">
-                  Nothing booked yet —{" "}
-                  <Link to="/events" className="underline underline-offset-4">
-                    browse events
-                  </Link>
-                  .
-                </p>
-              )}
-              {attendee.upcomingBookings.map((b) => (
-                <Link key={b.id} to={`/account/bookings/${b.id}`} className="flex items-center justify-between gap-2 hover:underline">
-                  <span className="min-w-0 truncate">{b.event.title}</span>
-                  <span className="shrink-0 text-xs text-muted-foreground">{formatDateTime(b.event.startTime)}</span>
-                </Link>
-              ))}
-            </CardContent>
-          </Card>
         </>
       )}
 
