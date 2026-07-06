@@ -33,7 +33,7 @@ function button(url: string, label: string): string {
 export function verificationEmail(name: string, token: string): EmailTemplate {
   const url = `${env.FRONTEND_URL}/verify-email?token=${token}`;
   const title = "Verify your email";
-  const body = `Hi ${name}, confirm your email address to activate bookings on your account.`;
+  const body = `Hi ${name}, confirm your email address to activate bookings on your account. Verify here: ${url}`;
   return {
     subject: "Verify your EventSphere email",
     title,
@@ -45,7 +45,7 @@ export function verificationEmail(name: string, token: string): EmailTemplate {
 export function passwordResetEmail(name: string, token: string): EmailTemplate {
   const url = `${env.FRONTEND_URL}/reset-password?token=${token}`;
   const title = "Reset your password";
-  const body = `Hi ${name}, we received a request to reset your EventSphere password.`;
+  const body = `Hi ${name}, we received a request to reset your EventSphere password. Reset here: ${url}`;
   return {
     subject: "Reset your EventSphere password",
     title,
