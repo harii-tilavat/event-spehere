@@ -1,31 +1,35 @@
 import { createBrowserRouter } from "react-router-dom";
-import { PublicLayout } from "@/layouts/PublicLayout";
-import { DashboardLayout } from "@/layouts/DashboardLayout";
-import { RequireAuth } from "@/components/shared/RequireAuth";
-import { HomePage } from "@/features/home/pages/HomePage";
-import { NotFoundPage } from "@/components/shared/NotFoundPage";
-import { LoginPage } from "@/features/auth/pages/LoginPage";
-import { RegisterPage } from "@/features/auth/pages/RegisterPage";
-import { ForgotPasswordPage } from "@/features/auth/pages/ForgotPasswordPage";
-import { ResetPasswordPage } from "@/features/auth/pages/ResetPasswordPage";
-import { VerifyEmailPage } from "@/features/auth/pages/VerifyEmailPage";
-import { DashboardHomePage } from "@/features/dashboard/pages/DashboardHomePage";
+import { PublicLayout } from "@/layouts/PublicLayout/PublicLayout";
+import { DashboardLayout } from "@/layouts/DashboardLayout/DashboardLayout";
+import { NotFound, RequireAuth, RouteError } from "@/components";
+import { HomePage } from "@/features/home/HomePage/HomePage";
+import { LoginPage } from "@/features/auth/pages/LoginPage/LoginPage";
+import { RegisterPage } from "@/features/auth/pages/RegisterPage/RegisterPage";
+import { ForgotPasswordPage } from "@/features/auth/pages/ForgotPasswordPage/ForgotPasswordPage";
+import { ResetPasswordPage } from "@/features/auth/pages/ResetPasswordPage/ResetPasswordPage";
+import { VerifyEmailPage } from "@/features/auth/pages/VerifyEmailPage/VerifyEmailPage";
+import { DashboardHomePage } from "@/features/dashboard/DashboardHomePage/DashboardHomePage";
+import { CategoriesPage } from "@/features/admin/CategoriesPage/CategoriesPage";
+import { VenuesPage } from "@/features/admin/VenuesPage/VenuesPage";
+import { UsersPage } from "@/features/admin/UsersPage/UsersPage";
+import { OrganizersPage } from "@/features/admin/OrganizersPage/OrganizersPage";
 
 /** Route map per docs/06 §3. */
 export const router = createBrowserRouter([
   // Standalone auth screens
-  { path: "/login", element: <LoginPage /> },
-  { path: "/register", element: <RegisterPage /> },
-  { path: "/forgot-password", element: <ForgotPasswordPage /> },
-  { path: "/reset-password", element: <ResetPasswordPage /> },
-  { path: "/verify-email", element: <VerifyEmailPage /> },
+  { path: "/login", element: <LoginPage />, errorElement: <RouteError /> },
+  { path: "/register", element: <RegisterPage />, errorElement: <RouteError /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage />, errorElement: <RouteError /> },
+  { path: "/reset-password", element: <ResetPasswordPage />, errorElement: <RouteError /> },
+  { path: "/verify-email", element: <VerifyEmailPage />, errorElement: <RouteError /> },
 
   // Public shell
   {
     element: <PublicLayout />,
+    errorElement: <RouteError />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "*", element: <NotFoundPage /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 
@@ -37,6 +41,7 @@ export const router = createBrowserRouter([
         <DashboardLayout />
       </RequireAuth>
     ),
+    errorElement: <RouteError />,
     children: [{ index: true, element: <DashboardHomePage /> }],
   },
 
@@ -48,6 +53,7 @@ export const router = createBrowserRouter([
         <DashboardLayout />
       </RequireAuth>
     ),
+    errorElement: <RouteError />,
     children: [{ index: true, element: <DashboardHomePage /> }],
   },
 
@@ -59,6 +65,13 @@ export const router = createBrowserRouter([
         <DashboardLayout />
       </RequireAuth>
     ),
-    children: [{ index: true, element: <DashboardHomePage /> }],
+    errorElement: <RouteError />,
+    children: [
+      { index: true, element: <DashboardHomePage /> },
+      { path: "categories", element: <CategoriesPage /> },
+      { path: "venues", element: <VenuesPage /> },
+      { path: "users", element: <UsersPage /> },
+      { path: "organizers", element: <OrganizersPage /> },
+    ],
   },
 ]);

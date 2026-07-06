@@ -14,11 +14,8 @@
   "dependencies": {
     "@eventsphere/shared": "workspace:*",
     "@hookform/resolvers": "^3.10.0",
-    "@radix-ui/react-slot": "^1.1.1",
     "@tanstack/react-query": "^5.62.11",
     "axios": "^1.7.9",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.469.0",
@@ -29,8 +26,8 @@
     "react-router-dom": "^7.1.1",
     "recharts": "^2.15.0",
     "sonner": "^1.7.1",
-    "tailwind-merge": "^2.6.0",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "@eventsphere/ui": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",

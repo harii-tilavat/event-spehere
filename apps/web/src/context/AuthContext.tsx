@@ -1,26 +1,16 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { AuthData, LoginInput, UserDto } from "@eventsphere/shared";
-import { api, refreshSession } from "@/lib/axios";
-import { onSessionChange, setAccessToken } from "@/lib/auth-token";
-import type { ApiSuccess } from "@eventsphere/shared";
+import type { AuthData, UserDto } from "@eventsphere/shared";
+import { onSessionChange, refreshSession, setAccessToken } from "@/api/core";
 
 export type AuthStatus = "loading" | "authenticated" | "guest";
-
-export interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-  role: "attendee" | "organizer";
-  organizationName?: string;
-}
 
 interface AuthContextValue {
   user: UserDto | null;
   status: AuthStatus;
-  login: (input: LoginInput) => Promise<UserDto>;
-  register: (input: RegisterPayload) => Promise<UserDto>;
-  logout: () => Promise<void>;
-  refreshUser: () => Promise<void>;
+  /** Store a session returned by the login/register data-layer hooks. */
+  applySession: (data: AuthData) => void;
+  /** Drop the local session (after the logout mutation settles). */
+  clearSession: () => void;
   setUser: (user: UserDto) => void;
 }
 
@@ -56,43 +46,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const value = useMemo<AuthContextValue>(() => {
-    const applySession = (data: AuthData): UserDto => {
-      setAccessToken(data.accessToken);
-      setUserState(data.user);
-      setStatus("authenticated");
-      return data.user;
-    };
-
-    return {
+  const value = useMemo<AuthContextValue>(
+    () => ({
       user,
       status,
-      async login(input) {
-        const res = await api.post<ApiSuccess<AuthData>>("/auth/login", input);
-        return applySession(res.data.data);
+      applySession(data) {
+        setAccessToken(data.accessToken);
+        setUserState(data.user);
+        setStatus("authenticated");
       },
-      async register(input) {
-        const res = await api.post<ApiSuccess<AuthData>>("/auth/register", input);
-        return applySession(res.data.data);
-      },
-      async logout() {
-        try {
-          await api.post("/auth/logout");
-        } finally {
-          setAccessToken(null);
-          setUserState(null);
-          setStatus("guest");
-        }
-      },
-      async refreshUser() {
-        const res = await api.get<ApiSuccess<{ user: UserDto }>>("/auth/me");
-        setUserState(res.data.data.user);
+      clearSession() {
+        setAccessToken(null);
+        setUserState(null);
+        setStatus("guest");
       },
       setUser(next) {
         setUserState(next);
       },
-    };
-  }, [user, status]);
+    }),
+    [user, status],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
