@@ -25,6 +25,9 @@ import { AdminBookingsPage } from "@/features/admin/AdminBookingsPage/AdminBooki
 import { AdminPaymentsPage } from "@/features/admin/AdminPaymentsPage/AdminPaymentsPage";
 import { MyBookingsPage } from "@/features/bookings/MyBookingsPage/MyBookingsPage";
 import { BookingDetailPage } from "@/features/bookings/BookingDetailPage/BookingDetailPage";
+import { WishlistPage } from "@/features/wishlist/WishlistPage/WishlistPage";
+import { NotificationsPage } from "@/features/notifications/NotificationsPage/NotificationsPage";
+import { ProfilePage } from "@/features/profile/ProfilePage/ProfilePage";
 
 /** Route map per docs/06 §3. */
 export const router = createBrowserRouter([
@@ -68,6 +71,9 @@ export const router = createBrowserRouter([
       { index: true, element: <DashboardHomePage /> },
       { path: "bookings", element: <MyBookingsPage /> },
       { path: "bookings/:id", element: <BookingDetailPage /> },
+      { path: "wishlist", element: <WishlistPage /> },
+      { path: "notifications", element: <NotificationsPage /> },
+      { path: "profile", element: <ProfilePage /> },
     ],
   },
 
@@ -87,6 +93,7 @@ export const router = createBrowserRouter([
       { path: "events/:slug/edit", element: <EventEditorPage /> },
       { path: "check-in", element: <CheckInPage /> },
       { path: "reports", element: <ReportsPage /> },
+      { path: "profile", element: <ProfilePage /> },
     ],
   },
 
@@ -110,6 +117,7 @@ export const router = createBrowserRouter([
       { path: "bookings", element: <AdminBookingsPage /> },
       { path: "payments", element: <AdminPaymentsPage /> },
       { path: "reports", element: <ReportsPage /> },
+      { path: "profile", element: <ProfilePage /> },
     ],
   },
 ]);

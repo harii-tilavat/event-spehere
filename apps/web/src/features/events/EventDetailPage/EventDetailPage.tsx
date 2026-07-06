@@ -1,14 +1,26 @@
 import { Link } from "react-router-dom";
-import { CalendarDays, ExternalLink, MapPin, Ticket, Users } from "lucide-react";
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@eventsphere/ui";
+import { CalendarDays, ExternalLink, Heart, MapPin, Ticket, Users } from "lucide-react";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, cn } from "@eventsphere/ui";
 import { QueryError } from "@/components";
 import { EventStatusBadge } from "@/components/EventStatusBadge/EventStatusBadge";
 import { formatDateTime, formatINR } from "@/lib/format";
 import { useAuth } from "@/context/AuthContext";
+import { ReviewsSection } from "./components";
 import { useEventDetailPage } from "./useEventDetailPage";
 
 export function EventDetailPage() {
-  const { event, isLoading, isError, error, refetch, isBookable } = useEventDetailPage();
+  const {
+    event,
+    isLoading,
+    isError,
+    error,
+    refetch,
+    isBookable,
+    isAttendee,
+    inWishlist,
+    isTogglingWishlist,
+    handleToggleWishlist,
+  } = useEventDetailPage();
   const { user } = useAuth();
 
   if (isLoading) {
@@ -52,7 +64,20 @@ export function EventDetailPage() {
         {event.isFeatured && <Badge>Featured</Badge>}
       </div>
 
-      <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">{event.title}</h1>
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{event.title}</h1>
+        {isAttendee && (
+          <Button
+            variant="outline"
+            size="icon"
+            disabled={isTogglingWishlist}
+            onClick={handleToggleWishlist}
+            aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            <Heart className={cn("size-4", inWishlist && "fill-destructive text-destructive")} />
+          </Button>
+        )}
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-6">
@@ -77,6 +102,8 @@ export function EventDetailPage() {
               </CardContent>
             </Card>
           )}
+
+          <ReviewsSection eventId={event.id} organizerId={event.organizer.id} />
         </div>
 
         <div className="space-y-6">

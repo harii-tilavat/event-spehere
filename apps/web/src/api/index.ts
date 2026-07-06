@@ -13,3 +13,6 @@ export * from "./ticketTypes";
 export * from "./bookings";
 export * from "./tickets";
 export * from "./dashboard";
+export * from "./wishlist";
+export * from "./reviews";
+export * from "./notifications";
