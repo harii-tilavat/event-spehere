@@ -1,8 +1,16 @@
+import { useState } from "react";
+import { useGetAdminDashboard, useGetAttendeeDashboard, useGetOrganizerDashboard, type DashboardRange } from "@/api";
 import { useAuth } from "@/context/AuthContext";
 import { DASHBOARD_NAV } from "@/layouts/DashboardLayout/const";
 
 export function useDashboardHomePage() {
   const { user } = useAuth();
+  const [range, setRange] = useState<DashboardRange>("30d");
+
+  const role = user?.role;
+  const adminQuery = useGetAdminDashboard(range, role === "super_admin");
+  const organizerQuery = useGetOrganizerDashboard(range, role === "organizer");
+  const attendeeQuery = useGetAttendeeDashboard(role === "attendee");
 
   const quickLinks = user ? DASHBOARD_NAV[user.role].filter((item) => !item.end) : [];
   const organizerStatus = user?.organizerProfile?.approvalStatus;
@@ -10,9 +18,18 @@ export function useDashboardHomePage() {
 
   return {
     user,
+    range,
+    setRange,
     quickLinks,
     isPendingOrganizer,
     organizerStatus,
     rejectionReason: user?.organizerProfile?.rejectionReason ?? null,
+    admin: adminQuery.data,
+    organizer: organizerQuery.data,
+    attendee: attendeeQuery.data,
+    isLoadingStats:
+      (role === "super_admin" && adminQuery.isPending) ||
+      (role === "organizer" && !isPendingOrganizer && organizerQuery.isPending) ||
+      (role === "attendee" && attendeeQuery.isPending),
   };
 }

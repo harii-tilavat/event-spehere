@@ -12,3 +12,4 @@ export * from "./events";
 export * from "./ticketTypes";
 export * from "./bookings";
 export * from "./tickets";
+export * from "./dashboard";

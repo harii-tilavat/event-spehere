@@ -20,6 +20,9 @@ import { OrganizerEventsPage } from "@/features/organizer/OrganizerEventsPage/Or
 import { EventEditorPage } from "@/features/organizer/EventEditorPage/EventEditorPage";
 import { BookingCheckoutPage } from "@/features/bookings/BookingCheckoutPage/BookingCheckoutPage";
 import { CheckInPage } from "@/features/organizer/CheckInPage/CheckInPage";
+import { ReportsPage } from "@/features/reports/ReportsPage/ReportsPage";
+import { AdminBookingsPage } from "@/features/admin/AdminBookingsPage/AdminBookingsPage";
+import { AdminPaymentsPage } from "@/features/admin/AdminPaymentsPage/AdminPaymentsPage";
 import { MyBookingsPage } from "@/features/bookings/MyBookingsPage/MyBookingsPage";
 import { BookingDetailPage } from "@/features/bookings/BookingDetailPage/BookingDetailPage";
 
@@ -83,6 +86,7 @@ export const router = createBrowserRouter([
       { path: "events/new", element: <EventEditorPage /> },
       { path: "events/:slug/edit", element: <EventEditorPage /> },
       { path: "check-in", element: <CheckInPage /> },
+      { path: "reports", element: <ReportsPage /> },
     ],
   },
 
@@ -103,6 +107,9 @@ export const router = createBrowserRouter([
       { path: "organizers", element: <OrganizersPage /> },
       { path: "approvals", element: <AdminEventsPage mode="approvals" /> },
       { path: "events", element: <AdminEventsPage mode="all" /> },
+      { path: "bookings", element: <AdminBookingsPage /> },
+      { path: "payments", element: <AdminPaymentsPage /> },
+      { path: "reports", element: <ReportsPage /> },
     ],
   },
 ]);
