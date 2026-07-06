@@ -13,6 +13,7 @@ import { adminBookingRoutes, bookingRoutes, eventBookingRoutes } from "@/routes/
 import { paymentRoutes } from "@/routes/payment.routes.js";
 import { attendanceRoutes, checkInRoutes, ticketRoutes } from "@/routes/ticket.routes.js";
 import { dashboardRoutes, reportRoutes } from "@/routes/dashboard.routes.js";
+import { eventReviewRoutes, notificationRoutes, reviewRoutes, wishlistRoutes } from "@/routes/social.routes.js";
 
 export const apiRouter = Router();
 
@@ -24,6 +25,7 @@ apiRouter.use("/users", userRoutes);
 apiRouter.use("/organizers", organizerRoutes);
 apiRouter.use("/uploads", uploadRoutes);
 apiRouter.use("/events", eventBookingRoutes);
+apiRouter.use("/events", eventReviewRoutes);
 apiRouter.use("/events", attendanceRoutes);
 apiRouter.use("/events", eventRoutes);
 apiRouter.use("/ticket-types", ticketTypeRoutes);
@@ -36,3 +38,6 @@ apiRouter.use("/tickets", ticketRoutes);
 apiRouter.use("/check-in", checkInRoutes);
 apiRouter.use("/dashboard", dashboardRoutes);
 apiRouter.use("/reports", reportRoutes);
+apiRouter.use("/wishlist", wishlistRoutes);
+apiRouter.use("/reviews", reviewRoutes);
+apiRouter.use("/notifications", notificationRoutes);

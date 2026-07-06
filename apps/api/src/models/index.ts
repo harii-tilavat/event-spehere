@@ -11,6 +11,8 @@ import { Booking } from "@/models/booking.model.js";
 import { BookingItem } from "@/models/booking-item.model.js";
 import { Payment } from "@/models/payment.model.js";
 import { Ticket } from "@/models/ticket.model.js";
+import { Review } from "@/models/review.model.js";
+import { Wishlist } from "@/models/wishlist.model.js";
 
 // Associations (docs/03 §3)
 User.hasMany(RefreshToken, { foreignKey: "userId", as: "refreshTokens" });
@@ -55,6 +57,16 @@ Payment.belongsTo(Booking, { foreignKey: "bookingId", as: "booking" });
 BookingItem.hasMany(Ticket, { foreignKey: "bookingItemId", as: "tickets" });
 Ticket.belongsTo(BookingItem, { foreignKey: "bookingItemId", as: "bookingItem" });
 
+Event.hasMany(Review, { foreignKey: "eventId", as: "reviews" });
+Review.belongsTo(Event, { foreignKey: "eventId", as: "event" });
+User.hasMany(Review, { foreignKey: "attendeeId", as: "reviews" });
+Review.belongsTo(User, { foreignKey: "attendeeId", as: "attendee" });
+
+User.hasMany(Wishlist, { foreignKey: "userId", as: "wishlists" });
+Wishlist.belongsTo(User, { foreignKey: "userId", as: "user" });
+Event.hasMany(Wishlist, { foreignKey: "eventId", as: "wishlists" });
+Wishlist.belongsTo(Event, { foreignKey: "eventId", as: "event" });
+
 export {
   User,
   RefreshToken,
@@ -69,4 +81,6 @@ export {
   BookingItem,
   Payment,
   Ticket,
+  Review,
+  Wishlist,
 };
