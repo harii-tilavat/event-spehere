@@ -1,5 +1,9 @@
 # 09 — Development Roadmap
 
+> **Status:** Phases 0–7 are implemented and tested, including the Phase-8 quick wins
+> (reviews & ratings, wishlist, in-app notification feed). Remaining Phase-8 backlog:
+> PDF report export, audit logs, organizer team members, seat selection.
+
 Sized for a solo developer alongside coursework: ~14–16 weeks of part-time work. Each phase ends with working, demonstrable software — if the schedule slips, everything through Phase 6 is still a complete, defensible project.
 
 ```mermaid

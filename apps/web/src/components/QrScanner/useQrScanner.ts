@@ -62,7 +62,7 @@ export function useQrScanner({ onScan, paused }: UseQrScannerArgs) {
     return () => {
       void stop();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- cleanup only
+     
   }, []);
 
   return { regionId: REGION_ID, isActive, start, stop };

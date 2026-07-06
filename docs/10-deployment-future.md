@@ -1,5 +1,11 @@
 # 10 — Deployment Strategy & Future Enhancements
 
+> **Implementation note:** all three external integrations ship with provider-abstracted
+> local fallbacks (mock payment gateway with identical HMAC verification, console/DB email
+> delivery, local-disk image storage), so the app runs fully featured with only Docker +
+> Node installed. Real credentials activate the production providers via `.env` alone.
+> Locally, MySQL maps to host port **3307** (see docker-compose.yml).
+
 ## 1. Deployment Targets (free-tier friendly)
 
 | Component | Primary choice | Alternative | Notes |
