@@ -11,6 +11,13 @@ export const passwordSchema = z
 
 export const nameSchema = z.string().trim().min(2, "Name is too short").max(100, "Name is too long");
 
+export const phoneSchema = z
+  .string()
+  .trim()
+  .regex(/^\d{10}$/, "Phone must be 10 digits")
+  .optional()
+  .or(z.literal("").transform(() => undefined));
+
 export const registerSchema = z
   .object({
     name: nameSchema,
@@ -30,3 +37,32 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
+
+export const verifyEmailSchema = z.object({
+  token: z.string().min(1, "Token is required"),
+});
+export type VerifyEmailInput = z.infer<typeof verifyEmailSchema>;
+
+export const forgotPasswordSchema = z.object({
+  email: emailSchema,
+});
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1, "Token is required"),
+  newPassword: passwordSchema,
+});
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
+
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1, "Current password is required"),
+  newPassword: passwordSchema,
+});
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+
+export const updateProfileSchema = z.object({
+  name: nameSchema.optional(),
+  phone: phoneSchema,
+  avatarUrl: z.string().url().max(500).optional().nullable(),
+});
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
