@@ -37,8 +37,11 @@ export async function storeImage(file: Express.Multer.File, folder: string): Pro
   const ext = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp" }[file.mimetype];
   if (!ext) throw new AppError(422, "VALIDATION_ERROR", "Unsupported image type");
 
-  const name = `${folder}-${crypto.randomBytes(8).toString("hex")}${ext}`;
-  await fs.mkdir(UPLOADS_DIR, { recursive: true });
-  await fs.writeFile(path.join(UPLOADS_DIR, name), file.buffer);
-  return { url: `http://localhost:${env.PORT}/uploads/${name}`, provider: "local" };
+  // Mirror Cloudinary's folder layout (eventsphere/<folder>/<name>) so switching
+  // providers later changes only the host, not the path structure.
+  const name = `${crypto.randomBytes(8).toString("hex")}${ext}`;
+  const dir = path.join(UPLOADS_DIR, "eventsphere", folder);
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(path.join(dir, name), file.buffer);
+  return { url: `http://localhost:${env.PORT}/uploads/eventsphere/${folder}/${name}`, provider: "local" };
 }

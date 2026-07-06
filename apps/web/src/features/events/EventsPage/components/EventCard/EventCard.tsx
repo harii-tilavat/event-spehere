@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CalendarDays, MapPin, Star } from "lucide-react";
 import { Badge, Card, CardContent } from "@eventsphere/ui";
 import { formatDateTime, formatINR } from "@/lib/format";
+import { eventImage } from "@/lib/images";
 import type { EventCardProps } from "./types";
 
 export function EventCard({ event }: EventCardProps) {
@@ -9,13 +10,7 @@ export function EventCard({ event }: EventCardProps) {
     <Link to={`/events/${event.slug}`} className="group">
       <Card className="h-full overflow-hidden transition-colors group-hover:border-ring">
         <div className="relative aspect-[16/9] bg-secondary">
-          {event.bannerUrl ? (
-            <img src={event.bannerUrl} alt="" className="size-full object-cover" loading="lazy" />
-          ) : (
-            <div className="flex size-full items-center justify-center bg-gradient-to-br from-secondary to-muted">
-              <CalendarDays className="size-8 text-muted-foreground" />
-            </div>
-          )}
+          <img src={eventImage(event)} alt="" className="size-full object-cover" loading="lazy" />
           {event.isFeatured && (
             <Badge className="absolute left-3 top-3" variant="default">
               <Star className="size-3" /> Featured

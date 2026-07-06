@@ -17,6 +17,7 @@ import {
   type Column,
 } from "@eventsphere/ui";
 import { ImageUploader, QueryError } from "@/components";
+import { categoryImage } from "@/lib/images";
 import { useCategoriesPage } from "./useCategoriesPage";
 
 export function CategoriesPage() {
@@ -49,11 +50,7 @@ export function CategoriesPage() {
       header: "Category",
       render: (c) => (
         <div className="flex items-center gap-3">
-          {c.imageUrl ? (
-            <img src={c.imageUrl} alt="" className="size-9 rounded-md border object-cover" />
-          ) : (
-            <div className="size-9 rounded-md border bg-muted" />
-          )}
+          <img src={categoryImage(c.slug, c.imageUrl)} alt="" className="size-9 rounded-md border object-cover" />
           <div>
             <p className="font-medium">{c.name}</p>
             <p className="text-xs text-muted-foreground">{c.slug}</p>

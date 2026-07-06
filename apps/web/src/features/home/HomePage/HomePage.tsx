@@ -1,17 +1,21 @@
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@eventsphere/ui";
+import { Link } from "react-router-dom";
+import { Button, Card, CardContent } from "@eventsphere/ui";
+import { HERO_IMAGE } from "@/lib/images";
 import { HOME_HIGHLIGHTS } from "./const";
 import { HealthBadge } from "./components";
 
 export function HomePage() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4">
-      <section className="flex flex-col items-center gap-6 py-24 text-center">
+      <section className="relative mt-6 overflow-hidden rounded-3xl border">
+        <img src={HERO_IMAGE} alt="" className="absolute inset-0 size-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/30" />
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
-          className="flex flex-col items-center gap-6"
+          className="relative flex flex-col items-center gap-6 px-4 py-24 text-center"
         >
           <HealthBadge />
           <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
@@ -21,10 +25,13 @@ export function HomePage() {
             EventSphere is a full-stack event booking and management platform for organizers,
             attendees, and administrators.
           </p>
+          <Button asChild size="lg">
+            <Link to="/events">Browse events</Link>
+          </Button>
         </motion.div>
       </section>
 
-      <section className="grid gap-4 pb-24 sm:grid-cols-3">
+      <section className="grid gap-4 py-16 sm:grid-cols-3">
         {HOME_HIGHLIGHTS.map(({ icon: Icon, title, body }, index) => (
           <motion.div
             key={title}

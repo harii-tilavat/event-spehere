@@ -4,6 +4,7 @@ import { Badge, Button, Card, CardContent, CardHeader, CardTitle, cn } from "@ev
 import { QueryError } from "@/components";
 import { EventStatusBadge } from "@/components/EventStatusBadge/EventStatusBadge";
 import { formatDateTime, formatINR } from "@/lib/format";
+import { eventImage } from "@/lib/images";
 import { useAuth } from "@/context/AuthContext";
 import { ReviewsSection } from "./components";
 import { useEventDetailPage } from "./useEventDetailPage";
@@ -49,13 +50,7 @@ export function EventDetailPage() {
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-8">
       <div className="relative mb-6 aspect-[21/9] overflow-hidden rounded-2xl border bg-secondary">
-        {event.bannerUrl ? (
-          <img src={event.bannerUrl} alt="" className="size-full object-cover" />
-        ) : (
-          <div className="flex size-full items-center justify-center bg-gradient-to-br from-secondary to-muted">
-            <CalendarDays className="size-12 text-muted-foreground" />
-          </div>
-        )}
+        <img src={eventImage(event)} alt="" className="size-full object-cover" />
       </div>
 
       <div className="mb-6 flex flex-wrap items-center gap-2">

@@ -52,7 +52,7 @@ The brief allows fallbacks when external services aren't configured — all thre
 
 - **Payments**: without `RAZORPAY_*` env vars the API issues mock orders and the checkout shows a test-gateway panel. Signature verification (`HMAC-SHA256(orderId|paymentId)`), idempotent confirmation, and the webhook handler are identical to the real flow.
 - **Email**: without `SMTP_*` env vars, emails are logged to the API console and recorded in the `notifications` table (which also powers the in-app feed). Verification/reset links appear in the console log in dev.
-- **Images**: without `CLOUDINARY_*` env vars, uploads are stored under `apps/api/uploads/` and served at `/uploads`.
+- **Images**: without `CLOUDINARY_*` env vars, uploads are stored by multer under `apps/api/uploads/eventsphere/<folder>/` — the same `eventsphere/<folder>` structure the Cloudinary integration uses — and served at `/uploads`. The Cloudinary code path stays in place; setting the env vars switches providers with no code changes. The frontend also ships real photos in `apps/web/src/assets/images/` used for the hero and as deterministic fallbacks wherever an event/category has no uploaded image.
 
 Engineering conventions live in [CLAUDE.md](CLAUDE.md); the React Query data-layer recipes are in [docs/react-query.md](docs/react-query.md).
 

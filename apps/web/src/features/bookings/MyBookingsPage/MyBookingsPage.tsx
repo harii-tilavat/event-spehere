@@ -4,6 +4,7 @@ import type { BookingStatus } from "@eventsphere/shared";
 import { Badge, Button, Card, CardContent, PageHeader } from "@eventsphere/ui";
 import { QueryError } from "@/components";
 import { formatDateTime, formatINR } from "@/lib/format";
+import { eventImage } from "@/lib/images";
 import { useMyBookingsPage } from "./useMyBookingsPage";
 
 const statusVariant: Record<BookingStatus, "success" | "secondary" | "destructive" | "outline"> = {
@@ -50,7 +51,13 @@ export function MyBookingsPage() {
           <Link key={b.id} to={`/account/bookings/${b.id}`} className="block">
             <Card className="transition-colors hover:border-ring">
               <CardContent className="flex items-center justify-between gap-3 p-4">
-                <div className="min-w-0">
+                <img
+                  src={eventImage(b.event)}
+                  alt=""
+                  className="hidden h-14 w-24 shrink-0 rounded-lg border object-cover sm:block"
+                  loading="lazy"
+                />
+                <div className="min-w-0 flex-1">
                   <p className="truncate font-medium">{b.event.title}</p>
                   <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <CalendarDays className="size-3.5" /> {formatDateTime(b.event.startTime)} · {b.event.venueName}
