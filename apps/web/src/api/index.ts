@@ -10,3 +10,5 @@ export * from "./organizers";
 export * from "./uploads";
 export * from "./events";
 export * from "./ticketTypes";
+export * from "./bookings";
+export * from "./tickets";

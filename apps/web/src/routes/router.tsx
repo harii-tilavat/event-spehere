@@ -18,6 +18,9 @@ import { EventsPage } from "@/features/events/EventsPage/EventsPage";
 import { EventDetailPage } from "@/features/events/EventDetailPage/EventDetailPage";
 import { OrganizerEventsPage } from "@/features/organizer/OrganizerEventsPage/OrganizerEventsPage";
 import { EventEditorPage } from "@/features/organizer/EventEditorPage/EventEditorPage";
+import { BookingCheckoutPage } from "@/features/bookings/BookingCheckoutPage/BookingCheckoutPage";
+import { MyBookingsPage } from "@/features/bookings/MyBookingsPage/MyBookingsPage";
+import { BookingDetailPage } from "@/features/bookings/BookingDetailPage/BookingDetailPage";
 
 /** Route map per docs/06 §3. */
 export const router = createBrowserRouter([
@@ -36,6 +39,14 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "events", element: <EventsPage /> },
       { path: "events/:slug", element: <EventDetailPage /> },
+      {
+        path: "events/:slug/book",
+        element: (
+          <RequireAuth roles={["attendee"]}>
+            <BookingCheckoutPage />
+          </RequireAuth>
+        ),
+      },
       { path: "*", element: <NotFound /> },
     ],
   },
@@ -49,7 +60,11 @@ export const router = createBrowserRouter([
       </RequireAuth>
     ),
     errorElement: <RouteError />,
-    children: [{ index: true, element: <DashboardHomePage /> }],
+    children: [
+      { index: true, element: <DashboardHomePage /> },
+      { path: "bookings", element: <MyBookingsPage /> },
+      { path: "bookings/:id", element: <BookingDetailPage /> },
+    ],
   },
 
   // Organizer dashboard
