@@ -39,7 +39,23 @@ export function categoryImage(slug: string, uploadedUrl?: string | null): string
   return uploadedUrl ?? CATEGORY_IMAGES[slug] ?? eventFallbackImage(slug.length);
 }
 
-/** Uploaded banner if present, otherwise a real photo keyed by event id. */
-export function eventImage(event: { id: number; bannerUrl: string | null }): string {
-  return event.bannerUrl ?? eventFallbackImage(event.id);
+function categorySlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Uploaded banner if present; otherwise a real photo matched to the event's
+ * category, falling back to a deterministic generic photo by event id.
+ */
+export function eventImage(event: { id: number; bannerUrl: string | null; categoryName?: string }): string {
+  if (event.bannerUrl) return event.bannerUrl;
+  if (event.categoryName) {
+    const matched = CATEGORY_IMAGES[categorySlug(event.categoryName)];
+    if (matched) return matched;
+  }
+  return eventFallbackImage(event.id);
 }
