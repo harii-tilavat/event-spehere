@@ -19,6 +19,7 @@ import { EventDetailPage } from "@/features/events/EventDetailPage/EventDetailPa
 import { OrganizerEventsPage } from "@/features/organizer/OrganizerEventsPage/OrganizerEventsPage";
 import { EventEditorPage } from "@/features/organizer/EventEditorPage/EventEditorPage";
 import { BookingCheckoutPage } from "@/features/bookings/BookingCheckoutPage/BookingCheckoutPage";
+import { CheckInPage } from "@/features/organizer/CheckInPage/CheckInPage";
 import { MyBookingsPage } from "@/features/bookings/MyBookingsPage/MyBookingsPage";
 import { BookingDetailPage } from "@/features/bookings/BookingDetailPage/BookingDetailPage";
 
@@ -81,6 +82,7 @@ export const router = createBrowserRouter([
       { path: "events", element: <OrganizerEventsPage /> },
       { path: "events/new", element: <EventEditorPage /> },
       { path: "events/:slug/edit", element: <EventEditorPage /> },
+      { path: "check-in", element: <CheckInPage /> },
     ],
   },
 
